@@ -10,7 +10,7 @@ public class GreetingTest {
     private Greeting target = new Greeting();
 
     @Test
-    public void testGetMessage_朝開始() {
+    public void getMessage_朝開始() {
         // 実行
         String message = this.target.getMessage(5);
         
@@ -19,7 +19,7 @@ public class GreetingTest {
     }
     
     @Test
-    public void testGetMessage_昼開始() {
+    public void getMessage_昼開始() {
         // 実行
         String message = this.target.getMessage(11);
 
@@ -28,7 +28,7 @@ public class GreetingTest {
     }
         
     @Test
-    public void testGetMessage_夜開始() {
+    public void getMessage_夜開始() {
         // 実行
         String message = this.target.getMessage(17);
         
