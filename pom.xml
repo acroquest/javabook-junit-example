@@ -7,20 +7,21 @@
   <packaging>jar</packaging>
 
   <properties>
-    <jdk.version>1.8</jdk.version>
+    <jdk.version>25</jdk.version>
+    <maven.compiler.release>${jdk.version}</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <site.encoding>UTF-8</site.encoding>
-    <jacoco.version>0.7.7.201606060606</jacoco.version>
-    <jacoco.include.package>acroquest.java.*</jacoco.include.package>
-    <jacoco.include.path>**/acroquest/java/**/*</jacoco.include.path>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <checkstyle.version>13.8.0</checkstyle.version>
+    <jacoco.version>0.8.15</jacoco.version>
+    <jacoco.include.path>acroquest/java/**/*</jacoco.include.path>
   </properties>
 
   <dependencies>
     <!-- Testing -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>6.1.0</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -30,12 +31,25 @@
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.15.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.19.1</version>
-          <configuration>
-            <forkMode>always</forkMode>
-            <argLine>-Xmx256m ${jacocoArgs}</argLine>
-          </configuration>
+          <version>3.5.6</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>3.6.0</version>
+          <dependencies>
+            <dependency>
+              <groupId>com.puppycrawl.tools</groupId>
+              <artifactId>checkstyle</artifactId>
+              <version>${checkstyle.version}</version>
+            </dependency>
+          </dependencies>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -43,11 +57,11 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
-        <version>3.5.1</version>
+        <version>3.22.0</version>
         <configuration>
           <locales>ja</locales>
           <inputEncoding>${project.build.sourceEncoding}</inputEncoding>
-          <outputEncoding>${site.encoding}</outputEncoding>
+          <outputEncoding>${project.reporting.outputEncoding}</outputEncoding>
         </configuration>
       </plugin>
       <plugin>
@@ -56,26 +70,18 @@
         <version>${jacoco.version}</version>
         <configuration>
           <includes>
-            <include>${jacoco.include.package}</include>
+            <include>${jacoco.include.path}</include>
           </includes>
         </configuration>
         <executions>
           <execution>
             <id>prepare-agent</id>
-            <phase>test-compile</phase>
             <goals>
               <goal>prepare-agent</goal>
             </goals>
-            <configuration>
-              <propertyName>jacocoArgs</propertyName>
-              <includes>
-                <include>*</include>
-              </includes>
-            </configuration>
           </execution>
           <execution>
             <id>report</id>
-            <phase>prepare-package</phase>
             <goals>
               <goal>report</goal>
             </goals>
@@ -91,31 +97,38 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.10.4</version>
+        <version>3.12.0</version>
         <configuration>
-          <source>${jdk.version}</source>
+          <release>${jdk.version}</release>
           <encoding>${project.build.sourceEncoding}</encoding>
-          <docencoding>${site.encoding}</docencoding>
-          <charset>${site.encoding}</charset>
+          <docencoding>${project.reporting.outputEncoding}</docencoding>
+          <charset>${project.reporting.outputEncoding}</charset>
           <failOnError>false</failOnError>
         </configuration>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>javadoc</report>
+              <report>test-javadoc</report>
+            </reports>
+          </reportSet>
+        </reportSets>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>2.17</version>
+        <version>3.6.0</version>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>findbugs-maven-plugin</artifactId>
-        <version>3.0.4</version>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>4.10.3.0</version>
         <configuration>
           <xmlOutput>true</xmlOutput>
           <failOnError>false</failOnError>
           <threshold>Default</threshold>
           <effort>Default</effort>
           <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
-          <effort>Default</effort>
         </configuration>
       </plugin>
       <plugin>
@@ -127,6 +140,23 @@
             <include>${jacoco.include.path}</include>
           </includes>
         </configuration>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>3.9.0</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>3.5.6</version>
       </plugin>
     </plugins>
   </reporting>
