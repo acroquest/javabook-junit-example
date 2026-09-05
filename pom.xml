@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>acroquest.java</groupId>
-  <artifactId>junit</artifactId>
+  <groupId>org.example</groupId>
+  <artifactId>javabook-junit-example</artifactId>
   <version>1.0.0</version>
   <packaging>jar</packaging>
 
@@ -13,7 +13,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <checkstyle.version>13.8.0</checkstyle.version>
     <jacoco.version>0.8.15</jacoco.version>
-    <jacoco.include.path>acroquest/java/**/*</jacoco.include.path>
+    <jacoco.include.path>org/example/**/*</jacoco.include.path>
   </properties>
 
   <dependencies>

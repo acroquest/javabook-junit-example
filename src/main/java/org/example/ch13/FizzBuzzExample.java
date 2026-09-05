@@ -1,4 +1,4 @@
-package acroquest.java.junit;
+package org.example.ch13;
 
 public class FizzBuzzExample {
     public static String fizzBuzz(int num) {
