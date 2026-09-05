@@ -11,7 +11,7 @@ public class FizzBuzzExample {
             return "Fizz";
         } else if (num % 5 == 0) {
             return "Buzz";
-        } else  {
+        } else {
             return Integer.toString(num);
         }
     }
